@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Number Generator</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .header {
+            background-color: #ff4081;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 28px;
+            font-family: 'Pacifico', cursive;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 80vh;
+            padding: 20px;
+        }
+
+        .generator {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .generator:hover {
+            transform: translateY(-10px);
+        }
+
+        .generator h1 {
+            margin-bottom: 24px;
+            font-size: 28px;
+            color: #ff4081;
+        }
+
+        .generator label {
+            margin-right: 10px;
+            font-size: 18px;
+            color: #555;
+        }
+
+        .generator select {
+            padding: 8px;
+            margin-bottom: 24px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            background-color: #ffecf1;
+            color: #333;
+        }
+
+        .generator input {
+            width: 200px;
+            padding: 12px;
+            margin-bottom: 24px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 24px;
+            color: #333;
+            background-color: #ffecf1;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .generator button {
+            padding: 12px 24px;
+            border: none;
+            background-color: #ff4081;
+            color: white;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s;
+        }
+
+        .generator button:hover {
+            background-color: #e73370;
+            transform: translateY(-3px);
+        }
+
+        .footer {
+            background-color: #f1f1f1;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .list-display {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .generator input, .generator select, .generator button {
+                width: 100%;
+                box-sizing: border-box;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        Random Number Generator
+    </div>
+    <div class="container">
+        <div class="generator">
+            <h1>Generate a Random Number</h1>
+            <label for="rangeSelect">Select Range:</label>
+            <select id="rangeSelect">
+                <option value="10">1-10</option>
+                <option value="20">1-20</option>
+                <option value="50">1-50</option>
+                <option value="100">1-100</option>
+            </select>
+            <input type="text" id="randomNumberField" readonly>
+            <button onclick="startAnimation()">Generate</button>
+        </div>
+    </div>
+    <div class="footer">
+        &copy; 2024 Random Number Generator. All rights reserved.
+    </div>
+    <script>
+        const listnumber = [1, 7, 7, 7, 7, 7, 7, 7, 2, 7, 7, 7, 7, 7, 3, 3, 3, 3,3 ,3, 3, 3, 3, 3,3, 4, 5, 7, 7, 7, 7,3, 3, 3, 3,6, 8, 9, 3, 3, 3, 3,7, 7, 7, 10]; // List of numbers to choose from
+
+        function startAnimation() {
+            const inputField = document.getElementById('randomNumberField');
+            const rangeSelect = document.getElementById('rangeSelect');
+            const maxNumber = parseInt(rangeSelect.value);
+            const animationList = Array.from({ length: maxNumber }, (_, i) => i + 1); // Create an array of numbers from 1 to maxNumber
+
+            let count = 0;
+            const interval = setInterval(() => {
+                const randomNumber = animationList[Math.floor(Math.random() * animationList.length)];
+                inputField.value = randomNumber;
+                count++;
+                if (count >= 30) { // Number of spins before stopping
+                    clearInterval(interval);
+                    // After animation, set the final random number from the listnumber
+                    const finalIndex = Math.floor(Math.random() * listnumber.length);
+                    inputField.value = listnumber[finalIndex];
+                }
+            }, 100); // Speed of animation
+        }
+    </script>
+</body>
+</html>
